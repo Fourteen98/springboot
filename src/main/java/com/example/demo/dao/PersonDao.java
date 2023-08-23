@@ -1,9 +1,12 @@
 package com.example.demo.dao;
 
+import com.example.demo.model.Person;
+
+
 import java.util.UUID;
 import java.util.List;
+import java.util.Optional;
 
-import com.example.demo.model.Person;
 
 public interface PersonDao {
     int insertPerson(UUID id, Person person);
@@ -14,4 +17,10 @@ public interface PersonDao {
     }
 
     List<Person> selectAllPeople();
+
+    int deletePersonById(UUID id);
+
+    int updatePersonById(UUID id, Person person);
+
+    Optional<Person> selectPersonById(UUID id);
 }
