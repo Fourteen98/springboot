@@ -1,6 +1,8 @@
 package com.example.demo.api;
 
 import com.example.demo.model.Person;
+import com.example.demo.model.PersonForJpa;
+import com.example.demo.pojo.PersonResponse;
 import com.example.demo.service.PersonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("api/v1/person")
+@RequestMapping("api/v1/person/")
 @RestController
 public class PersonController {
     private final PersonService personService;
@@ -21,8 +23,8 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@Valid @NotNull @RequestBody Person person){
-        personService.addPerson(person);
+    public void addPerson(@Valid @NotNull @RequestBody PersonForJpa person){
+        personService.savePerson(person);
     }
 
     @GetMapping
@@ -45,5 +47,8 @@ public class PersonController {
         personService.updatePerson(id, personToUpdate);
     }
 
-
+    @GetMapping(path="by/{name}")
+    public PersonResponse getPersonByName(@PathVariable("name") String name){
+        return personService.findByName(name);
+    }
 }
